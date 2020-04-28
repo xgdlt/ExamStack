@@ -63,6 +63,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public List<Group> getGroupList( Page<Group> page) {
+		return userMapper.getGroupList( page);
+	}
+
+	@Override
 	public HashMap<String, Role> getRoleMap() {
 		// TODO Auto-generated method stub
 		List<Role> roleList = userMapper.getRoleList();

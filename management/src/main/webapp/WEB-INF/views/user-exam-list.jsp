@@ -170,6 +170,11 @@ request.setAttribute("leftMenuId",list[3]);
 											<i class="fa fa-random"></i> 关联用户组
 										</button>
 									</div>
+									<div class="btn-group table-controller-item" style="float: left">
+                                        <button class="btn btn-default btn-sm" id="link-user-dep-r-btn">
+                                            <i class="fa fa-random"></i> 关联部门
+                                        </button>
+                                    </div>
 								</div>
 								<table class="table-striped table">
 									<thead>
@@ -353,6 +358,38 @@ request.setAttribute("leftMenuId",list[3]);
 				</div>
 			</div>
 		</div>
+
+		<!-- 管理部门modal -->
+            <div class="modal fade" id="link-user-dep-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;</button>
+                            <h6 class="modal-title" id="myModalLabel">关联部门</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="link-user-dep-form">
+                                <div class="form-line form-user-id" style="display: block;">
+                                    <fieldset>
+                                        <c:forEach items="${depList}" var="item">
+                                            <label><input type="checkbox" value="${item.depId }"/></label>
+                                            <label>${item.depName }</label>
+                                            <br>
+                                        </c:forEach>
+                                    </fieldset>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                关闭窗口</button>
+                            <button id="link-user-dep-btn" type="button" class="btn btn-primary">
+                                确定添加</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 		
 		<footer>
 			<div class="container">
@@ -360,7 +397,7 @@ request.setAttribute("leftMenuId",list[3]);
 					<div class="col-md-12">
 						<div class="copy">
 							<p>
-								ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a> | <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a href="http://www.examstack.com/" target="_blank">FAQ</a> | <a href="http://www.examstack.com/" target="_blank">联系我们</a>
+								<a href="." target="_blank">主页</a> |  <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
 							</p>
 						</div>
 					</div>
@@ -395,6 +432,13 @@ request.setAttribute("leftMenuId",list[3]);
 						keyboard : true
 					});
 				});
+				$("#link-user-dep-r-btn").click(function(){
+                //	$("#link-user-btn").data("id",$(this).data("id"));
+                    $("#link-user-dep-modal").modal({
+                        backdrop : true,
+                        keyboard : true
+                    });
+                });
 			});
 		</script>
 		

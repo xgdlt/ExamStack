@@ -106,7 +106,13 @@ public interface ExamService {
 	 * @param examId
 	 */
 	public void addGroupUser2Exam(List<Integer> groupIdList,int examId);
-	
+
+	/**
+	 * 将部门中的用户添加到考试中
+	 * @param depIdList
+	 * @param examId
+	 */
+	public void addDepUser2Exam(List<Integer> depIdList, int examId);
 	/**
 	 * 获取用户考试历史列表（所有）
 	 * @param page

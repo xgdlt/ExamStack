@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.binding.MapperMethod.MapperParamMap;
 import org.apache.ibatis.executor.parameter.DefaultParameterHandler;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
@@ -30,14 +28,14 @@ import java.sql.Connection;
 public class MyInterceptor implements Interceptor {
 
 	private Page<?> page;
-	private static Log log = LogFactory.getLog(MyInterceptor.class);
+
 	public synchronized Object intercept(Invocation invocation) throws Throwable {
 		// TODO Auto-generated method stub
 		try{
 			RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
 			StatementHandler delegate = (StatementHandler) ReflectUtil.getFieldValue(handler, "delegate");
 			BoundSql boundSql = delegate.getBoundSql();
-			log.info("拦截sql=" + boundSql.getSql());
+
 			//获取sql对应的参数
 			MapperParamMap<?> mapperParamMap = null;
 			try{
@@ -66,7 +64,7 @@ public class MyInterceptor implements Interceptor {
 					StringBuffer sqlBuffer = new StringBuffer(strSql);
 					String pageSql = this.getMySqlPageSql(page, sqlBuffer);
 					ReflectUtil.setFieldValue(boundSql, "sql", pageSql);
-					log.info("修改后的sql=" + pageSql);
+
 				}
 				
 			}

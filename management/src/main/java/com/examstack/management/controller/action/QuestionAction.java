@@ -1,6 +1,7 @@
 package com.examstack.management.controller.action;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,16 +10,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.examstack.common.domain.exam.Message;
 import com.examstack.common.domain.question.KnowledgePoint;
@@ -31,9 +31,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class QuestionAction {
+    private static final Logger logger = LoggerFactory.getLogger(QuestionAction.class);
 
 	@Autowired
 	private QuestionService questionService;
@@ -197,6 +199,9 @@ public class QuestionAction {
 		return message;
 	}
 
+
+
+
 	@RequestMapping(value = "/secure/upload-uploadify-img", method = RequestMethod.POST)
 	public @ResponseBody String uploadImg(HttpServletRequest request, HttpServletResponse response) {
 		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -217,8 +222,27 @@ public class QuestionAction {
 		return filePathList.get(0);
 	}
 
+
+
+	@RequestMapping(value = "/secure/upload-file", method = RequestMethod.POST)
+	@ResponseBody
+	public Message upload(@RequestParam(value = "file", required = false) MultipartFile file,
+							   HttpServletRequest request) throws IOException {
+        Message message = new Message();
+        logger.info("begin to upload file = {}",file.getOriginalFilename());
+		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+
+		String filePath = FileUploadUtil.uploadFile(file,userInfo.getUsername());
+        message.setMessageInfo(filePath);
+        logger.info("end to upload file = {} for filePath = {}",file.getOriginalFilename(), filePath);
+		return message;
+	}
+
+
 	@RequestMapping(value = "/secure/upload-uploadify", method = RequestMethod.POST)
 	public @ResponseBody String uploadFile(HttpServletRequest request, HttpServletResponse response) {
+
 		UserInfo userInfo = (UserInfo) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<String> filePathList = new ArrayList<String>();
 		try {

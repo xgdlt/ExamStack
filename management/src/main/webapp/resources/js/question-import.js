@@ -1,5 +1,51 @@
+
+layui.use('upload', function () {
+    var upload = layui.upload;
+    //执行实例
+    var uploadInst = upload.render({
+        elem: '#test1', //绑定元素
+        url: 'secure/upload-file', //上传接口
+        size: 10000000,
+        accept: 'file',
+        done: function (r) {
+            $("#upload_file").val(r.messageInfo);
+             layer.msg(r.result);
+
+        },
+        error: function (r) {
+         layer.msg(r.result);
+        }
+    });
+});
+
 $(function(){
 	question_import.initial();
+});
+
+$(function () {
+    $('#fileupload').fileupload({
+
+        dataType: 'json',
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100);
+            $('#progress .bar').css(
+                'width',
+                progress + '%'
+            );
+        },
+
+       done: function (e, data){
+             $("#fileupload").val(data);
+       }
+    });
+});
+
+$(function () {
+    $('#upload_btn').change(function(){
+        $(this).upload(document.getElementsByTagName('base')[0].href + 'secure/upload-file', function(data){
+             $("#upload_file").val(data);
+        });
+    });
 });
 
 var question_import={
@@ -40,6 +86,7 @@ var question_import={
 						}
 					},
 					onUploadError: function(file,errorCode,errorMsg, errorString) {
+
 						util.error(errorMsg);
 					}
 			    });
@@ -47,8 +94,8 @@ var question_import={
 		},
 		questionDataProcess : function questionDataProcess(){
 			$("#from-question-import").submit(function(){
-				//var filePath = $("#div-file-list").find("input").val();
-				var filePath = $("#div-file-list").find("input").val().split('\\').pop();
+				var filePath = $("#upload_file").val();
+				//var filePath = $("#div-file-list").find("input").val().split('\\').pop();
 				$.ajax({
 					headers : {
 						'Accept' : 'application/json',

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.examstack.common.domain.user.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -94,7 +95,9 @@ public class ExamPageAdmin {
 			    .getPrincipal();
 		List<Group> groupList = userService.getGroupListByUserId(userInfo.getUserid(), null);
 		List<ExamPaper> examPaperList = examPaperService.getEnabledExamPaperList(userInfo.getUsername(), null);
+		List<Department> departments = userService.getDepList(null);
 		model.addAttribute("groupList", groupList);
+		model.addAttribute("depList", departments);
 		model.addAttribute("examPaperList", examPaperList);
 		return "exam-add";
 	}
@@ -142,7 +145,9 @@ public class ExamPageAdmin {
 		String pageStr = PagingUtil.getPageBtnlink(page,
 				pageModel.getTotalPage());
 		List<Group> groupList = userService.getGroupListByUserId(userInfo.getUserid(), null);
+		List<Department> depList =  userService.getDepList(null);
 		model.addAttribute("groupList", groupList);
+		model.addAttribute("depList", depList);
 		model.addAttribute("histList", histList);
 		model.addAttribute("pageStr", pageStr);
 		model.addAttribute("examId", examId);
@@ -156,7 +161,7 @@ public class ExamPageAdmin {
 	 * 学员试卷
 	 * @param model
 	 * @param request
-	 * @param examhistoryId
+	 * @param histId
 	 * @return
 	 */
 	@RequestMapping(value = "/admin/exam/student-answer-sheet/{histId}", method = RequestMethod.GET)

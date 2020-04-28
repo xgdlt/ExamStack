@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.examstack.common.domain.question.QuestionStruts;
 import com.examstack.common.util.Roulette;
@@ -29,7 +27,7 @@ import com.examstack.common.util.Roulette;
  * 
  */
 public class Paper {
-	public static Log log = LogFactory.getLog(Paper.class);
+
 	/**
 	 * 试卷试题列表
 	 */
@@ -151,14 +149,12 @@ public class Paper {
 			float dt = (float) (Math
 					.round(((1f - (float) (avg * (count - 1)))) * 1000)) / 1000;
 
-			log.info("dt = " + dt);
-			log.info("avg = " + avg);
+
 			for (int i = 0; i < count; i++) {
 				if (i == count - 1)
 					hm.put(i, dt);
 				else
 					hm.put(i, avg);
-				log.info("知识点" + i + "的选择概率:" + hm.get(i));
 			}
 		} else {
 			Iterator<Integer> itrate1 = knowledgePointRate.keySet().iterator();
@@ -189,7 +185,6 @@ public class Paper {
 			// 获取题量
 			questionNum += questionTypeNum.get(key);
 		}
-		log.info("题型数量=" + count1);
 
 		it1 = questionMap.keySet().iterator();
 
@@ -205,7 +200,6 @@ public class Paper {
 				hm1.put(i, dt1);
 			else
 				hm1.put(i, avg1);
-			log.info("题型" + i + "的选择概率:" + hm1.get(i));
 		}
 		// 轮盘赌选择题型
 		Roulette<Integer> r1 = new Roulette<Integer>(resultList1, hm1);
@@ -219,8 +213,6 @@ public class Paper {
 				typeId = r1.getResult();
 				List<QuestionStruts> qs = questionMap.get(pointId).get(typeId);
 				if (qs == null) {
-					log.info("pointId=" + pointId + "typeId=" + typeId);
-					log.info(questionMap.get(pointId));
 					continue;
 
 				}
@@ -255,7 +247,6 @@ public class Paper {
 	// 涵盖的知识点越多越好
 	private void setFitness() {
 		float difficultyMinus = Math.abs(this.difficulty - eDifficulty);
-		log.info("eDifficulty=" + eDifficulty);
 		this.fitness = (float) ((1 / difficultyMinus) * Math
 				.sqrt(this.exposure));
 	}
@@ -278,7 +269,6 @@ public class Paper {
 			exposureSum += q.getExposeTimes();
 		}
 		this.difficulty = pointLose / pointSum;
-		log.info("difficulty=" + this.difficulty);
 		this.exposure = exposureSum;
 		setFitness();
 	}

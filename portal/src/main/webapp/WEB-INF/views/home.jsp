@@ -319,9 +319,7 @@ String basePath = request.getScheme() + "://"
 								<c:when test="${fn:length(newsList) eq 1 }">
 									<li class="news-list-item clearfix">
 										<a class="home-link-anchor" href="news/${newsList[0].newsId }" target="_blank">
-										<div class="news-list-thumbnail">
-											<img src="http://www.examstack.com/resources/images/index/index3.jpg">
-										</div>
+
 										<div class="news-list-content">
 											<div class="news-list-title">
 												${newsList[0].title }
@@ -336,9 +334,6 @@ String basePath = request.getScheme() + "://"
 								<c:otherwise>
 									<li class="news-list-item clearfix">
 										<a class="home-link-anchor" href="news/${newsList[0].newsId }" target="_blank">
-										<div class="news-list-thumbnail">
-											<img src="http://www.examstack.com/resources/images/index/index3.jpg">
-										</div>
 										<div class="news-list-content">
 											<div class="news-list-title"">
 												${newsList[0].title }
@@ -351,9 +346,6 @@ String basePath = request.getScheme() + "://"
 									</li>
 									<li class="news-list-item clearfix">
 										<a class="home-link-anchor" href="news/${newsList[1].newsId }">
-										<div class="news-list-thumbnail">
-											<img src="http://www.examstack.com/resources/images/index/index2.jpg">
-										</div>
 										<div class="news-list-content">
 											<div class="news-list-title">
 												${newsList[1].title }
@@ -380,7 +372,7 @@ String basePath = request.getScheme() + "://"
 					<div class="col-md-12">
 						<div class="copy">
 							<p>
-								ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a> | <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a href="http://www.examstack.com/" target="_blank">FAQ</a> | <a href="http://www.examstack.com/" target="_blank">联系我们</a>
+								<a href="." target="_blank">主页</a> |  <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
 							</p>
 						</div>
 					</div>
@@ -448,6 +440,5 @@ String basePath = request.getScheme() + "://"
 			});
 		}
 		</script>
-		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1252987997'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1252987997' type='text/javascript'%3E%3C/script%3E"));</script>
 	</body>
 </html>

@@ -4,12 +4,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 
 public class ReflectUtil {
-
-	private static final Log logger = LogFactory.getLog(ReflectUtil.class);
 
 	public static Field[] getFields(Object target){
 		if(target == null)
@@ -34,9 +31,7 @@ public class ReflectUtil {
             method.invoke(target, value);
 
         } catch (Exception e) {
-            if (logger.isDebugEnabled()) {
-                logger.debug(e);
-            }
+            e.printStackTrace();
             try {
                 Field field = clazz.getDeclaredField(name);
                 if (!Modifier.isPublic(field.getModifiers())) {
@@ -44,9 +39,7 @@ public class ReflectUtil {
                 }
                 field.set(target, value);
             } catch (Exception fe) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug(fe);
-                }
+                e.printStackTrace();
             }
         }
     }

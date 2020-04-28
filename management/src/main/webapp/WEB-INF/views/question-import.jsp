@@ -26,11 +26,24 @@ request.setAttribute("leftMenuId",list[3]);
 		<link href="resources/bootstrap/css/bootstrap-huan.css" rel="stylesheet">
 		<link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="resources/css/style.css" rel="stylesheet">
-		
+		<link href="resources/css/layui.css" rel="stylesheet">
 		<link href="resources/css/question-add.css" rel="stylesheet">
 		<link href="resources/chart/morris.css" rel="stylesheet">
 	</head>
 	<body>
+			<!-- Javascript files -->
+    		<!-- jQuery -->
+    		<script type="text/javascript" src="resources/js/jquery/jquery-1.9.0.min.js"></script>
+    		<script type="text/javascript" src="resources/js/jquery/fileupload/vendor/jquery.ui.widget.js"></script>
+            <script type="text/javascript" src="resources/js/jquery/fileupload/jquery.iframe-transport.js"></script>
+            <script type="text/javascript" src="resources/js/jquery/fileupload/jquery.fileupload.js"></script>
+    		<script type="text/javascript" src="resources/js/all.js"></script>
+    		<script type="text/javascript" src="resources/js/layer/layui.js"></script>
+    		<script type="text/javascript" src="resources/js/uploadify/jquery.uploadify3.1Fixed.js"></script>
+    		<script type="text/javascript" src="resources/js/question-import.js"></script>
+
+    		<!-- Bootstrap JS -->
+    		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
 		<header>
 			<span style="display:none;" id="rule-role-val"><%=list[1]%></span>
 			<div class="container">
@@ -102,22 +115,44 @@ request.setAttribute("leftMenuId",list[3]);
 								</select>
 								<span class="form-message"></span>
 							</div>
+
 							<div class="form-line template-download">
 								<span class="form-label">下载模板：</span>
 								<a href="resources/template/question.xlsx" style="color:rgb(22,22,22);text-decoration: underline;">点击下载</a>
 							</div>
+							<!--
 							<div class="form-line control-group">
 								<span class="form-label"><span class="warning-label">*</span>上传文件：</span>
 								<div class="controls file-form-line">
 									<div>
 										<div id="div-file-list"></div>
-										<!-- 用来作为文件队列区域 -->
+
 										<div id="fileQueue"></div>
 										<div id="uploadify"></div>
 									</div>
 									<span class="help-inline form-message"></span>
 								</div>
 							</div>
+
+							<div class="form-line control-group">
+                                <span class="form-label"><span class="warning-label">*</span>上传文件：</span>
+                                <div class="controls file-form-line">
+                                    <input id="fileupload" type="file" name="fileupload" data-url="<%=basePath%>secure/upload-file" value=""/>
+                                </div>
+                            </div>
+                            -->
+
+                            <div class="form-line control-group">
+                                <span class="form-label"><span class="warning-label">*</span>上传文件：</span>
+                                <div class="controls file-form-line">
+                                    <input type="hidden" id="upload_file" name="uploadFile" value="">
+                                    <button type="button" class="layui-btn" id="test1">
+                                        <i class="fa fa-cloud"></i>上传文件
+                                    </button>
+                                </div>
+                            </div>
+
+
 							<div class="form-line">
 								<input value="提交" type="submit" class="df-submit btn btn-info">
 							</div>
@@ -133,8 +168,8 @@ request.setAttribute("leftMenuId",list[3]);
 					<div class="col-md-12">
 						<div class="copy">
 							<p>
-								ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a> | <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a href="http://www.examstack.com/" target="_blank">FAQ</a> | <a href="http://www.examstack.com/" target="_blank">联系我们</a>
-							</p>
+								<a href="." target="_blank">主页</a> |  <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
+                            </p>
 						</div>
 					</div>
 				</div>
@@ -144,15 +179,29 @@ request.setAttribute("leftMenuId",list[3]);
 		</footer>
 
 		<!-- Slider Ends -->
+<!--
+<script type="text/javascript">
 
-		<!-- Javascript files -->
-		<!-- jQuery -->
-		<script type="text/javascript" src="resources/js/jquery/jquery-1.9.0.min.js"></script>
-		<script type="text/javascript" src="resources/js/all.js"></script>
-		<script type="text/javascript" src="resources/js/uploadify/jquery.uploadify3.1Fixed.js"></script>
-		<script type="text/javascript" src="resources/js/question-import.js"></script>
-		
-		<!-- Bootstrap JS -->
-		<script type="text/javascript" src="resources/bootstrap/js/bootstrap.min.js"></script>
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1', //绑定元素
+            url: '<%=basePath%>secure/upload-file', //上传接口
+            size: 10000000,
+            accept: 'file',
+            done: function (r) {
+                $("#upload_file").val(r);
+                layer.msg(r);
+                app.getData();
+            },
+            error: function (r) {
+                layer.msg(r);
+            }
+        });
+    });
+
+</script>
+-->
 	</body>
 </html>

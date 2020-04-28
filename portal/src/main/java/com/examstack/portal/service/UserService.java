@@ -44,6 +44,13 @@ public interface UserService {
 	 */
 	public List<Group> getGroupListByUserId(int userId, Page<Group> page);
 
+	/**
+	 * 获取所有用户分组
+	 *
+	 * @param page
+	 * @return
+	 */
+	List<Group> getGroupList( Page<Group> page);
 	
 	/**
 	 * 获取所有的角色并生成字典

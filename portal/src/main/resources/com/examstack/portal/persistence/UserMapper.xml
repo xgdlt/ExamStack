@@ -59,6 +59,11 @@
 	</insert>
 	
 	<!-- group -->
+	<select id="getGroupList" resultType="com.examstack.common.domain.user.Group">
+		select id groupId,group_name groupName,create_time createTime,is_default defaultt
+		from et_group
+	</select>
+
 	<select id="getGroupListByUserId" resultType="com.examstack.common.domain.user.Group">
 		select id groupId,group_name groupName,create_time createTime,is_default defaultt
 		from et_group where user_id=#{userId}

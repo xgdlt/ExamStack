@@ -68,8 +68,8 @@ var create_account = {
 		var check_p = this.checkPassword();
 		var check_pc = this.checkConfirmPassword();
 		var check_com = /*this.checkDepartment();*/true;
-		var check_id = this.checkNationalId();
-		var check_phone = this.checkPhoneNum();
+		var check_id = true;//this.checkNationalId();
+		var check_phone = true; // this.checkPhoneNum();
 		var check_dep = this.checkDepartment();
 		result = check_u && check_t && check_e && check_p && check_pc && check_com && check_id && check_phone && check_dep;
 		return result;

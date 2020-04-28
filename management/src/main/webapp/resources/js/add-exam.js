@@ -34,6 +34,14 @@ var add_exam={
 						groupIds.push($(this).val());
 					});
 					data.groupIdList = groupIds;
+
+					var deps = $(".add-update-dep-list :checked");
+                    var depIds = new Array();
+                    deps.each(function(){
+                        depIds.push($(this).val());
+                    });
+                    data.depIds = depIds;
+
 					jQuery.ajax({
 						headers : {
 							'Accept' : 'application/json',

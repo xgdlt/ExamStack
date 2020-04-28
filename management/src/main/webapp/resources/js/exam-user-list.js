@@ -6,9 +6,47 @@ var exam_users = {
 			this.bindApprove();
 			this.bindDisapprove();
 			this.searchPaper();
+			this.bindAddDepUser();
 			this.bindAddGroupUser();
 			this.bindAddUser();
 		},
+		bindAddDepUser : function bindAddDepUser(){
+            $("#link-user-dep-btn").click(function(){
+
+                var depIds = new Array();
+                var checkedGroup = $("#link-user-dep-form :checked");
+                checkedGroup.each(function(i,value){
+                    depIds.push($(this).val());
+                });
+                $.ajax({
+                    headers : {
+                        'Accept' : 'application/json',
+                        'Content-Type' : 'application/json'
+                    },
+                    type : "POST",
+                    url : util.getCurrentRole() + "/exam/add-exam-dep/" + $("#exam-id-hidden").val(),
+                    data : JSON.stringify(depIds),
+                    success : function(message, tst, jqXHR) {
+                        if (!util.checkSessionOut(jqXHR))
+                            return false;
+                        if (message.result == "success") {
+                            util.success("操作成功!", function(){
+                                window.location.reload();
+                            });
+                        } else {
+                            util.error("操作失败请稍后尝试:" + message.result);
+                        }
+
+                    },
+                    error : function(jqXHR, textStatus) {
+                        util.error("操作失败请稍后尝试");
+                    }
+                });
+
+                return false;
+
+                });
+        },
 		bindAddGroupUser : function bindAddGroupUser(){
 			$("#link-user-group-btn").click(function(){
 				

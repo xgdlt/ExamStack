@@ -1,10 +1,13 @@
 package com.examstack.management.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +26,7 @@ import com.examstack.management.persistence.UserMapper;
 
 @Service("examService")
 public class ExamServiceImpl implements ExamService {
-
+    private static final Logger logger = LoggerFactory.getLogger(ExamServiceImpl.class);
 	@Autowired
 	private ExamMapper examMapper;
 	@Autowired
@@ -33,11 +36,22 @@ public class ExamServiceImpl implements ExamService {
 	@Transactional
 	@Override
 	public void addExam(Exam exam) {
-		// TODO Auto-generated method stub
 		try {
 			examMapper.addExam(exam);
-			if(exam.getGroupIdList() != null && exam.getGroupIdList().size() > 0){
-				List<User> userList = userMapper.getUserListByGroupIdList(exam.getGroupIdList(), null);
+			List<User> userList =  new ArrayList<User>();
+			if(exam.getGroupIdList() != null && exam.getGroupIdList().size() > 0) {
+				List<User>  list = userMapper.getUserListByGroupIdList(exam.getGroupIdList(), null);
+				if(list != null && !list.isEmpty()){
+                    userList.addAll(list);
+                }
+			}
+			if(exam.getDepIdList() != null && exam.getDepIdList().size() > 0) {
+				List<User>  list = userMapper.getUserListByDepIdList(exam.getDepIdList(), null);
+                if(list != null && !list.isEmpty()){
+                    userList.addAll(list);
+                }
+			}
+			if(userList != null && userList.size() > 0){
 				ExamPaper examPaper = examPaperMapper.getExamPaperById(exam.getExamPaperId());
 				SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 				Date now = new Date();
@@ -58,7 +72,7 @@ public class ExamServiceImpl implements ExamService {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+            logger.error("addExam = {} Exception = {} ",exam,e );
 			throw new RuntimeException(e);
 		}
 	}
@@ -202,6 +216,48 @@ public class ExamServiceImpl implements ExamService {
 			throw new RuntimeException(e);
 		}
 	}
+
+
+    @Transactional
+    @Override
+    public void addDepUser2Exam(List<Integer> depIdList, int examId) {
+
+        try {
+            Exam exam = examMapper.getExamById(examId);
+            ExamPaper examPaper = examPaperMapper.getExamPaperById(exam.getExamPaperId());
+            List<User> userList = userMapper.getUserListByDepIdList(depIdList, null);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+            Date now = new Date();
+            for(User user : userList){
+                ExamHistory history = this.getUserExamHistByUserIdAndExamId(user.getUserId(), examId, 0,1,2,3);
+                if(history == null){
+                    history = new ExamHistory();
+                    history.setExamId(exam.getExamId());
+                    history.setExamPaperId(exam.getExamPaperId());
+                    history.setContent(examPaper.getContent());
+                    history.setDuration(examPaper.getDuration());
+                    //默认创建的记录都是审核通过的
+                    history.setApproved(1);
+                    String seriNo = sdf.format(now) + StringUtil.format(user.getUserId(), 3) + StringUtil.format(exam.getExamId(), 3);
+                    history.setSeriNo(seriNo);
+                    history.setVerifyTime(new Date());
+                    history.setUserId(user.getUserId());
+                    examMapper.addUserExamHist(history);
+                }else if(history.getApproved() == 0){
+                    //审核状态是0的才允许重新添加
+                    examMapper.deleteUserExamHistByUserId(exam.getExamId(),user.getUserId());
+                    //批量添加的都是审核通过的记录
+                    history.setApproved(1);
+                    examMapper.addUserExamHist(history);
+                }
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            logger.error("addDepUser2Exam Exception = {}",e);
+            throw new RuntimeException(e);
+        }
+    }
+
 	@Override
 	public List<ExamHistory> getUserExamHistList(Page<ExamHistory> page, int... approved) {
 		// TODO Auto-generated method stub

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -20,8 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtil {
-
-	public static Log log = LogFactory.getLog(ExcelUtil.class);
 	
 	public static List<Map<String,String>> ExcelToList(String filePath) throws Exception{
 		
@@ -45,7 +41,7 @@ public class ExcelUtil {
 				
 				//获取标题行
 				HSSFRow title = sheet.getRow(0);
-				log.info(title.getLastCellNum());
+
 				int index = title.getFirstCellNum();
 				int rowcount = title.getLastCellNum();
 				for (int i = 1; i < rows; i++){

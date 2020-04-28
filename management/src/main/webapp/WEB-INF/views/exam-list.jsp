@@ -221,7 +221,7 @@
 				<div class="col-md-12">
 					<div class="copy">
 						<p>
-							ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a>
+							<a href="." target="_blank">ExamStack</a>
 						</p>
 					</div>
 				</div>

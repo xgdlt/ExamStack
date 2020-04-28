@@ -101,6 +101,26 @@ public class ExamActionAdmin {
 		}
 		return msg;
 	}
+
+	/**
+	 * 将部门中的用户添加到考试中
+	 * @param depIdList
+	 * @param examId
+	 * @return
+	 */
+	@RequestMapping(value = "admin/exam/add-exam-dep/{examId}", method = RequestMethod.POST)
+	public @ResponseBody Message addExamDep(@RequestBody List<Integer> depIdList,@PathVariable("examId") int examId) {
+
+		Message msg = new Message();
+		try {
+			examService.addDepUser2Exam(depIdList, examId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			msg.setResult(e.getClass().getName());
+		}
+		return msg;
+	}
 	
 	/**
 	 * 添加模拟考试

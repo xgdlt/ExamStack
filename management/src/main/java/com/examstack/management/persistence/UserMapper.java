@@ -171,13 +171,13 @@ public interface UserMapper {
 	 * @param depId
 	 */
 	public void addUser2Dep(@Param("userId") int userId,@Param("depId") int depId);
-	
+
 	/**
 	 * 删除用户的部门信息
 	 * @param userId
 	 */
 	public void deleteUser2Dep(int userId);
-	
+
 	/**
 	 * 获取分组中的用户
 	 * @param idList
@@ -185,4 +185,13 @@ public interface UserMapper {
 	 * @return
 	 */
 	public List<User> getUserListByGroupIdList(@Param("array") List<Integer> idList,@Param("page") Page<User> user);
+
+
+	/**
+	 * 获取部门中的用户
+	 * @param idList
+	 * @param user
+	 * @returnDep
+	 */
+	public List<User> getUserListByDepIdList(@Param("array") List<Integer> idList,@Param("page") Page<User> user);
 }

@@ -17,6 +17,7 @@ public class Exam implements Serializable {
 	private int examPaperId;
 	private String examPaperName;
 	private List<Integer> groupIdList;
+	private List<Integer> depIdList;
 	private int creator;
 	private String creatorId;
 	//准考证号
@@ -107,5 +108,33 @@ public class Exam implements Serializable {
 	public void setCreator(int creator) {
 		this.creator = creator;
 	}
-	
+
+	public List<Integer> getDepIdList() {
+		return depIdList;
+	}
+
+	public void setDepIdList(List<Integer> depIdList) {
+		this.depIdList = depIdList;
+	}
+
+	@Override
+	public String toString() {
+		return "Exam{" +
+				"examId=" + examId +
+				", examName='" + examName + '\'' +
+				", examSubscribe='" + examSubscribe + '\'' +
+				", examType=" + examType +
+				", createTime=" + createTime +
+				", effTime=" + effTime +
+				", expTime=" + expTime +
+				", examPaperId=" + examPaperId +
+				", examPaperName='" + examPaperName + '\'' +
+				", groupIdList=" + groupIdList +
+				", depIdList=" + depIdList +
+				", creator=" + creator +
+				", creatorId='" + creatorId + '\'' +
+				", seriNo='" + seriNo + '\'' +
+				", approved=" + approved +
+				'}';
+	}
 }

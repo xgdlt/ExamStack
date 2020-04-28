@@ -60,6 +60,21 @@
 		</foreach>
 		)
 	</select>
+
+	<select id="getUserListByDepIdList" resultType="com.examstack.common.domain.user.User">
+		select a.user_id userId,a.user_name
+		userName,a.`password`,a.true_name trueName,a.national_id nationalId,
+		a.email,a.phone_num phoneNum,a.create_time createTime,a.create_by
+		createBy,
+		a.field_id fieldId,a.last_login_time
+		lastLoginTime,a.company,a.enabled,department from
+		et_user a,et_user_2_role b,et_role c
+		where a.user_id=b.user_id and b.role_id=c.id and a.user_id in(select user_id from et_user_2_department where dep_id in
+		<foreach collection="array" open="(" close=")" index="index" item="item" separator=",">
+			#{item}
+		</foreach>
+		)
+	</select>
 	
 	<select id="getUserListByGroupIdAndParams" resultType="com.examstack.common.domain.user.User">
 		select a.user_id userId,a.user_name

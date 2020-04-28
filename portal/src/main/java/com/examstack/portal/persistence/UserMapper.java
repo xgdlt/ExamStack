@@ -54,6 +54,15 @@ public interface UserMapper {
 	 */
 	public List<Group> getGroupListByUserId(@Param("userId") int userId, @Param("page") Page<Group> page);
 
+
+	/**
+	 * 获取所有用户分组
+	 *
+	 * @param page
+	 * @return
+	 */
+	public List<Group> getGroupList( @Param("page") Page<Group> page);
+
 	
 	/**
 	 * 为学员分配一个用户组

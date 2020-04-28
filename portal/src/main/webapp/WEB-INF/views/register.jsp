@@ -139,16 +139,19 @@
 									<input type="text" class="df-input-narrow" id="truename-add"
 										maxlength="20"> <span class="form-message"></span> <br>
 								</div>
+								<!--
 								<div class="form-line form-national-id" style="display: block;">
 									<span class="form-label"><span class="warning-label">*</span>身份证号：</span>
 									<input type="text" class="df-input-narrow" id="national-id-add"
 										maxlength="18"> <span class="form-message"></span> <br>
 								</div>
+
 								<div class="form-line form-phone" style="display: block;">
 									<span class="form-label"><span class="warning-label">*</span>手机：</span>
 									<input type="text" class="df-input-narrow" id="phone-add"
 										maxlength="18"> <span class="form-message"></span> <br>
 								</div>
+								-->
 								<div class="form-line form-email" style="display: block;">
 									<span class="form-label"><span class="warning-label">*</span>邮箱：</span>
 									<input type="text" class="df-input-narrow" id="email-add"
@@ -159,12 +162,13 @@
 									<input type="text" class="df-input-narrow" id="company-add"
 										maxlength="60"> <span class="form-message"></span> <br>
 								</div>
+
 								<div class="form-line form-department" style="display: block;">
 									<span class="form-label"><span class="warning-label"></span>部门单位：</span>
 									<select id="department-input-select" class="df-input-narrow">
 										<option value="-1">--请选择--</option>
-										<c:forEach items="${depList }" var="item">
-											<option value="${item.depId }">${item.depName }</option>
+										<c:forEach items="${depList}" var="item">
+											<option value="${item.depId}">${item.depName}</option>
 										</c:forEach>
 									</select>
 									<span class="form-message"></span>
@@ -172,6 +176,7 @@
 								</div>
 
 								<!-- Checkbox -->
+								<!--
 								<div class="form-group form-confirm">
 									<div class="col-md-9 col-md-offset-3">
 										<label class="checkbox-inline"> <input type="checkbox"
@@ -181,6 +186,7 @@
 									</div>
 
 								</div>
+								-->
 
 								<!-- Buttons -->
 								<div class="form-group">
@@ -207,12 +213,9 @@
 				<div class="col-md-12">
 					<div class="copy">
 						<p>
-							ExamStack Copyright © <a href="http://www.examstack.com/"
-								target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a>
-							| <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a
-								href="http://www.examstack.com/" target="_blank">FAQ</a> | <a
-								href="http://www.examstack.com/" target="_blank">联系我们</a>
-						</p>
+							<a href="." target="_blank">主页</a>
+                            | <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
+                        </p>
 					</div>
 				</div>
 			</div>

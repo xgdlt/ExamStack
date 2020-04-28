@@ -68,7 +68,7 @@
 			<version>${org.springframework.security-version}</version>
 		</dependency>
 		<!-- Logging -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${org.slf4j-version}</version>
@@ -87,7 +87,7 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
-		</dependency>
+		</dependency>-->
 		<!-- Mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>

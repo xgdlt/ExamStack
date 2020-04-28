@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class Roulette<T> {
 
-	public static Log log = LogFactory.getLog(Roulette.class);
 	private List<T> resultList;
 	private HashMap<Integer,Float> chanceMap;
 	
@@ -19,8 +16,6 @@ public class Roulette<T> {
 		float sum = 0;
 		while(it.hasNext()){
 			sum = (float)(Math.round((sum + chanceMap.get(it.next())) * 1000)) / 1000;
-			
-			log.info("sum = " + sum);
 		}
 		
 		if(sum == 1 && resultList.size() == chanceMap.size()){

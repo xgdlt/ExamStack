@@ -9,6 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,50 +38,43 @@ import com.google.gson.Gson;
  */
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
-
+	private static final Logger logger = LoggerFactory.getLogger(QuestionServiceImpl.class);
 	@Autowired
 	private QuestionMapper questionMapper;
 
 	@Override
 	public List<Question> getQuestionList(Page<Question> pageModel, QuestionFilter qf) {
-		// TODO Auto-generated method stub
 		return questionMapper.getQuestionList(qf, pageModel);
 	}
 
 	@Override
 	public List<Field> getAllField(Page<Field> page) {
-		// TODO Auto-generated method stub
 		return questionMapper.getAllField(page);
 	}
 
 	@Override
 	public List<KnowledgePoint> getKnowledgePointByFieldId(int fieldId, Page<KnowledgePoint> page) {
-		// TODO Auto-generated method stub
 		return questionMapper.getKnowledgePointByFieldId(fieldId, page);
 	}
 
 	@Override
 	public List<QuestionType> getQuestionTypeList() {
-		// TODO Auto-generated method stub
 		return questionMapper.getQuestionTypeList();
 	}
 
 	@Override
 	public List<Tag> getTags(Page<Tag> page) {
-		// TODO Auto-generated method stub
 		return questionMapper.getTags(page);
 	}
 
 	@Override
 	public void addTag(Tag tag) {
-		// TODO Auto-generated method stub
 		questionMapper.addTag(tag);
 	}
 
 	@Override
 	@Transactional
 	public void addQuestion(Question question) {
-		// TODO Auto-generated method stub
 		try {
 			questionMapper.insertQuestion(question);
 			for (Integer i : question.getPointList()) {
@@ -92,26 +87,22 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public void addField(Field field) {
-		// TODO Auto-generated method stub
 		questionMapper.addField(field);
 	}
 
 	@Override
 	public void addKnowledgePoint(KnowledgePoint point) {
-		// TODO Auto-generated method stub
 		questionMapper.addKnowledgePoint(point);
 	}
 
 	@Override
 	public List<QuestionTag> getQuestionTagByQuestionIdAndUserId(int questionId, int userId, Page<QuestionTag> page) {
-		// TODO Auto-generated method stub
 		return questionMapper.getQuestionTagByQuestionIdAndUserId(questionId, userId, page);
 	}
 
 	@Override
 	@Transactional
 	public void addQuestionTag(int questionId, int userId, List<QuestionTag> questionTagList) {
-		// TODO Auto-generated method stub
 		try {
 			List<Integer> idList = new ArrayList<Integer>();
 			for (QuestionTag t : questionTagList) {
@@ -128,9 +119,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 	/**
 	 * 重载，整合了tag的功能
-	 * 
-	 * @see com.extr.service.QuestionServiceImpl#updateQuestionPoint(Question
-	 *      question)
+	 *
 	 * @param question
 	 * @param userId
 	 * @param questionTagList
@@ -138,7 +127,6 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	@Transactional
 	public void updateQuestionPoint(Question question, int userId, List<QuestionTag> questionTagList) {
-		// TODO Auto-generated method stub
 		try {
 			questionMapper.deleteQuestionPointByQuestionId(question.getId());
 			for (int id : question.getPointList()) {
@@ -164,25 +152,21 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public void deleteFieldByIdList(List<Integer> idList) {
-		// TODO Auto-generated method stub
 		questionMapper.deleteFieldByIdList(idList);
 	}
 
 	@Override
 	public void deleteKnowledgePointByIdList(List<Integer> idList) {
-		// TODO Auto-generated method stub
 		questionMapper.deleteKnowledgePointByIdList(idList);
 	}
 
 	@Override
 	public void deleteTagByIdList(List<Integer> idList) {
-		// TODO Auto-generated method stub
 		questionMapper.deleteTagByIdList(idList);
 	}
 
 	@Override
 	public Question getQuestionByQuestionId(int questionId) {
-		// TODO Auto-generated method stub
 		return questionMapper.getQuestionByQuestionId(questionId);
 	}
 
@@ -194,13 +178,11 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public void deleteQuestionByQuestionId(int questionId) {
-		// TODO Auto-generated method stub
 		questionMapper.deleteQuestionByQuestionId(questionId);
 	}
 
 	@Override
 	public HashMap<Integer, HashMap<Integer, List<QuestionStruts>>> getQuestionStrutsMap(List<Integer> idList) {
-		// TODO Auto-generated method stub
 		HashMap<Integer, HashMap<Integer, List<QuestionStruts>>> hm = new HashMap<Integer, HashMap<Integer, List<QuestionStruts>>>();
 		List<QuestionStruts> questionList = questionMapper.getQuestionListByPointId(idList);
 		for (QuestionStruts q : questionList) {
@@ -220,12 +202,14 @@ public class QuestionServiceImpl implements QuestionService {
 	@Transactional
 	@Override
 	public void uploadQuestions(String filePath, String username, int fieldId) {
-		// TODO Auto-generated method stub
+        logger.info("begin to upload quertions for filePath = {} username={} fieldId = {}",filePath,username,fieldId);
 		//String strPath = ",webapps,files,question," + username + ",tmp";
-		String strPath = ",webapps,files,question," + username;
-		
-		filePath = System.getProperty("catalina.base") + strPath.replace(',', File.separatorChar) + File.separatorChar
-				+ filePath;
+		//String strPath = ",webapps,files,question," + username;
+
+		//filePath = System.getProperty("catalina.base") + strPath.replace(',', File.separatorChar) + File.separatorChar				+ filePath;
+
+		//filePath = System.getProperty("catalina.base") + File.separatorChar + filePath;
+        //logger.info("filePath = {}",filePath);
 		Map<String, KnowledgePoint> pointMap = this.getKnowledgePointMapByFieldId(fieldId, null);
 		int index = 2;
 		try {
@@ -296,16 +280,14 @@ public class QuestionServiceImpl implements QuestionService {
 				index++;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 
-			e.printStackTrace();
+			logger.error("upload Questions Exception = ", e);
 			throw new RuntimeException("第" + index + "行有错误，请检查！" + e.getMessage());
 		}
 	}
 
 	@Override
 	public Map<String, KnowledgePoint> getKnowledgePointMapByFieldId(int fieldId, Page<KnowledgePoint> page) {
-		// TODO Auto-generated method stub
 		Map<String, KnowledgePoint> map = new HashMap<String, KnowledgePoint>();
 		List<KnowledgePoint> pointList = questionMapper.getKnowledgePointByFieldId(fieldId, page);
 		for (KnowledgePoint point : pointList) {
@@ -316,7 +298,6 @@ public class QuestionServiceImpl implements QuestionService {
 	
 	@Override
 	public Map<Integer, Map<Integer, QuestionStatistic>> getTypeQuestionStaticByFieldId(int fieldId) {
-		// TODO Auto-generated method stub
 		List<QuestionStatistic> statisticList = questionMapper.getTypeQuestionStaticByFieldId(fieldId);
 		Map<Integer, Map<Integer, QuestionStatistic>> map = new HashMap<Integer, Map<Integer, QuestionStatistic>>();
 		for(QuestionStatistic statistic : statisticList){
@@ -332,7 +313,6 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Map<Integer, String> getKnowledgePointMap(int fieldId) {
-		// TODO Auto-generated method stub
 		List<KnowledgePoint> knowledgeList = null;
 		if(fieldId == 0)
 			knowledgeList = questionMapper.getKnowledgePointByFieldId(0, null);
@@ -388,7 +368,6 @@ public class QuestionServiceImpl implements QuestionService {
 	@Transactional
 	@Override
 	public Question getQuestionDetail(int questionId,int userId) {
-		// TODO Auto-generated method stub
 		try {
 			Question question = questionMapper.getQuestionByQuestionId(questionId);
 			List<QuestionTag> tagList = questionMapper.getQuestionTagByQuestionIdAndUserId(questionId, userId, null);
@@ -397,7 +376,6 @@ public class QuestionServiceImpl implements QuestionService {
 			question.setKnowledgePoint(pointList);
 			return question;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -405,7 +383,6 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public List<PointStatistic> getPointCount(int fieldId, Page<PointStatistic> page) {
-		// TODO Auto-generated method stub
 		return questionMapper.getPointCount(fieldId, page);
 	}
 }

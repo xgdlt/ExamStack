@@ -219,7 +219,7 @@ request.setAttribute("leftMenuId",list[3]);
 					<div class="col-md-12">
 						<div class="copy">
 							<p>
-								ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a> | <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a href="http://www.examstack.com/" target="_blank">FAQ</a> | <a href="http://www.examstack.com/" target="_blank">联系我们</a>
+								<a href="." target="_blank">主页</a> |  <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
 							</p>
 						</div>
 					</div>

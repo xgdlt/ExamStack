@@ -127,19 +127,33 @@ request.setAttribute("leftMenuId",list[3]);
 									<span class="form-message"></span>
 								</div>
 								<div class="form-line add-update-group-list">
-									<span class="form-label"><span class="warning-label">*</span>参考人员：</span>
+									<span class="form-label"><span class="warning-label">*</span>参考分组：</span>
 									<fieldset>
 										<legend>
 											请选择
 										</legend>
-										<c:forEach items="${groupList }" var="item">
-											<label><input type="checkbox" value="${item.groupId }"/></label>
+										<c:forEach items="${groupList}" var="item">
+											<label><input type="checkbox" value="${item.groupId}"/></label>
 											<label>${item.groupName }</label>
 											<br>
 										</c:forEach>
 									</fieldset>
 									<span class="form-message"></span>
 								</div>
+								<div class="form-line add-update-dev-list">
+                                    <span class="form-label"><span class="warning-label">*</span>参考部门：</span>
+                                    <fieldset>
+                                        <legend>
+                                            请选择
+                                        </legend>
+                                        <c:forEach items="${depList}" var="item">
+                                            <label><input type="checkbox" value="${item.depId}"/></label>
+                                            <label>${item.depName }</label>
+                                            <br>
+                                        </c:forEach>
+                                    </fieldset>
+                                    <span class="form-message"></span>
+                                </div>
 								<div class="form-line form-exam-duration">
 									<span class="form-label"><span class="warning-label">*</span>生效日期：</span>
 									<input id="exam-eff-date" type="text" class="df-input-narrow">
@@ -201,7 +215,7 @@ request.setAttribute("leftMenuId",list[3]);
 					<div class="col-md-12">
 						<div class="copy">
 							<p>
-								ExamStack Copyright © <a href="http://www.examstack.com/" target="_blank">ExamStack</a> - <a href="." target="_blank">主页</a> | <a href="http://www.examstack.com/" target="_blank">关于我们</a> | <a href="http://www.examstack.com/" target="_blank">FAQ</a> | <a href="http://www.examstack.com/" target="_blank">联系我们</a>
+								<a href="." target="_blank">主页</a> |  <a href="http://172.20.20.172:6006/shadow/" target="_blank">论坛</a>
 							</p>
 						</div>
 					</div>
